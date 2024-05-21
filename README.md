@@ -3,7 +3,7 @@
 ## Description
 Design files for the TOP Starter-Kit.
 
-Microfluidic building block port layouts and footprints follow the [ISO 22916:2022](https://www.iso.org/standard/74157.html) compliant [Top Design Rules (TDRs)](https://data.4tu.nl/datasets/2558bd4c-d7ad-4e17-bc54-8c335b4c1c01).
+Microfluidic building block port layouts and footprints follow [ISO 22916:2022](https://www.iso.org/standard/74157.html) compliant [Top Design Rules (TDRs)](https://data.4tu.nl/datasets/2558bd4c-d7ad-4e17-bc54-8c335b4c1c01).
 
 A short introduction on application of ISO 11916:2022 in general can be found [here](https://data.4tu.nl/datasets/871d6c3a-cf1a-44f9-865a-6da842bd2f27/2).
 
