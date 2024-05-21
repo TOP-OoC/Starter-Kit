@@ -8,8 +8,8 @@ All Microfluidic Building Block (MFBB) port layouts and footprints comply with [
 MFBB port layouts and footprints for Sensors, Reservoirs and Organ on Chip (OoC) devices follow the ISO 11916:2022 compliant [Top Design Rules (TDRs)](https://data.4tu.nl/datasets/2558bd4c-d7ad-4e17-bc54-8c335b4c1c01).
 
 ## Components
-[Fluidic Circuit Board (FCB)](https://github.com/TOP-OoC/Starter-Kit/blob/main/FCB/)
-More to come...
+- [Fluidic Circuit Board (FCB)](https://github.com/TOP-OoC/Starter-Kit/blob/main/FCB/)
+- More to come...
 
 ## Contact
 For more information contact:
