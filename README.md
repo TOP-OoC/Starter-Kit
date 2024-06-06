@@ -9,7 +9,7 @@ Microfluidic building block port layouts and footprints follow our [TOP Design R
 
 Taking all of it's features together, the TOP Starter Kit allows a powerful simplification of the broader OoC design space: A chip designer needs only to adhere to the TDRs to ensure that their device can be immediately used in a wide range of different fit-to-purpose fluidic circuits without ever needing to design a custom FCB.
 
-## Components
+## Content
 - [Fluidic Circuit Board (FCB)](https://github.com/TOP-OoC/Starter-Kit/blob/main/FCB/)
 - [Reservoirs](https://github.com/TOP-OoC/Starter-Kit/tree/main/Reservoirs)
 - More to come...
