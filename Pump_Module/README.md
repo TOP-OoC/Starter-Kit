@@ -9,6 +9,8 @@ A custom, small form factor, pump driver PCB is also included here. An Arduino N
 
 Design files for a PMMA Pump Block Base that makes fluidic contact between the pumps and the FCB are also included.
 
+Six unpopulated spaces for through-hole resistors are left in the PCB for pump-specific feedback resistors to be added.  These resistors control the current sourced by the driver and must be added during or after manufacturing.  For the pumps listed here, a resistor value of 56 kOhm was used.
+
 The PCB is connected to the PMMA carrier with M2 PCB standoffs.
 
 A photo of the assembled module is shown below to assist with assembly. Note that the PCB is conformal coated with epoxy before use in high humidity settings.
