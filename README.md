@@ -12,6 +12,7 @@ Taking all of it's features together, the TOP Starter Kit allows a powerful simp
 ## Content
 - [Fluidic Circuit Board (FCB)](https://github.com/TOP-OoC/Starter-Kit/blob/main/FCB/)
 - [Reservoirs](https://github.com/TOP-OoC/Starter-Kit/tree/main/Reservoirs)
+- [Pump Module](https://github.com/TOP-OoC/Starter-Kit/tree/main/Pump_Module)
 - More to come...
 
 ## Contact
