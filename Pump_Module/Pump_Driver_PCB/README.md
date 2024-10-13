@@ -1,2 +1,2 @@
 # Description
-Design files for the pump driver PCB
+Design files and firmware for the pump driver PCB
