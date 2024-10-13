@@ -13,6 +13,7 @@ The PCB is connected to the PMMA carrier with M2 PCB standoffs.
 
 A photo of the assembled module is shown below to assist with assembly:
 
+![PumpModulePicture](https://github.com/user-attachments/assets/e27e87b6-33cc-46fd-b079-faf1f96512c1)
 
 
 ## Credits
@@ -23,7 +24,7 @@ Eric Safai
 Joshua Loessberg-Zahl
 
 ### Manufacturing Credits:
-This design was manufactured in-house at University of Twente.
+This design was manufactured in-house at University of Twente.  PCB manufacturing was outsourced to both JLCPCB and Eurocircuits.
 
 ### Extra Credits:
 The design work was done at University of Twente in the Netherlands, supported by the university’s Organ-on-Chip Centre Twente (www.utwente.nl/oocct), specifically at the groups: Applied Stem Cell Technologies and BIOS Lab-on-a-Chip Group. 
