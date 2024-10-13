@@ -3,7 +3,7 @@
 ## Description
 STL files, original sldprt files, PCB design files, and firmware for the Starter Kit Pump Module
 
-This module uses six stepper motor driven peristaltic pumps manufactured by Takasago Fluidic Systems.  Specifically: [Stepper Motor Type of Ring Pump RP-QⅡ/RP-QⅢ Series [Discharge Rate: 0.18 ~ 180 μL/min]](https://www.takasago-fluidics.com/products/rp-q-stepper-2?variant=45644386238630)
+This module uses six stepper-motor driven peristaltic pumps, manufactured by Takasago Fluidic Systems.  Specifically: [Stepper Motor Type of Ring Pump RP-QⅡ/RP-QⅢ Series [Discharge Rate: 0.18 ~ 180 μL/min]](https://www.takasago-fluidics.com/products/rp-q-stepper-2?variant=45644386238630)
 
 A custom, small form factor, pump driver PCB is also included here. An Arduino Nano 33 IoT is mounted on this driver and controls the module. The provided firmware allows control of the pumps via BLE.
 
