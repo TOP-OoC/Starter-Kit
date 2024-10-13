@@ -7,7 +7,7 @@ This module uses six stepper motor driven peristaltic pumps manufactured by Taka
 
 A custom, small form factor, pump driver PCB is also included here. An Arduino Nano 33 IoT is mounted on this driver and controls the module. The provided firmware allows control of the pumps via BLE.
 
-Design files for a PMMA carrier that makes fluidic contact between the pumps and the FCB are also included.
+Design files for a PMMA Pump Block Base that makes fluidic contact between the pumps and the FCB are also included.
 
 The PCB is connected to the PMMA carrier with M2 PCB standoffs.
 
