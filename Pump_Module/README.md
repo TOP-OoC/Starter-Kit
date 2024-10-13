@@ -11,7 +11,7 @@ Design files for a PMMA carrier that makes fluidic contact between the pumps and
 
 The PCB is connected to the PMMA carrier with M2 PCB standoffs.
 
-A photo of the assembled module is shown below to assist with assembly:
+A photo of the assembled module is shown below to assist with assembly. Note that the PCB is conformal coated with epoxy before use in high humidity settings.
 
 ![PumpModulePicture](https://github.com/user-attachments/assets/e27e87b6-33cc-46fd-b079-faf1f96512c1)
 
