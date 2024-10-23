@@ -2,7 +2,7 @@
 #include <FlashStorage.h>
 
 //board name
-const char board_name[] = "PumpModule_0001";
+const char board_name[] = "PumpModule_0003";
 
 //permanent variables
 FlashStorage(not_first_boot, bool);
@@ -79,6 +79,14 @@ BLEIntCharacteristic Pump6Characteristic("2A57", BLERead | BLEWrite);
 BLEDescriptor Pump6CharacteristicDescriptor("2901", "Pump 6 Frequency (int | Hz)");
 
 void setup() {
+  //Variable for reading the pump direction to later update the initail value of the BLE characteristics
+  int pump_1_dir = -1;
+  int pump_2_dir = -1;
+  int pump_3_dir = -1;
+  int pump_4_dir = -1;
+  int pump_5_dir = -1;
+  int pump_6_dir = -1;
+  
   Serial.begin(9600);
   //while (!Serial);
 
@@ -127,16 +135,19 @@ void setup() {
   if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
     pump_1_active = HIGH;
     digitalWrite(DIR_PIN_1, LOW);
+    pump_1_dir = -1;
     delay_time_1 = (unsigned long)((float)1000000/(-(float)read_value));
   }
   else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
     pump_1_active = LOW;
     digitalWrite(DIR_PIN_1, HIGH);
+    pump_1_dir = 1;
     delay_time_1 = (unsigned long)(1000000);
   }
   else{                       //otherwise set pump to active, dir pin to high, and delay time normally
     pump_1_active = HIGH;
     digitalWrite(DIR_PIN_1, HIGH);
+    pump_1_dir = 1;
     delay_time_1 = (unsigned long)((float)1000000/(float)read_value);
   }
   
@@ -145,16 +156,19 @@ void setup() {
   if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
     pump_2_active = HIGH;
     digitalWrite(DIR_PIN_2, LOW);
+    pump_2_dir = -1;
     delay_time_2 = (unsigned long)((float)1000000/(-(float)read_value));
   }
   else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
     pump_2_active = LOW;
     digitalWrite(DIR_PIN_2, HIGH);
+    pump_2_dir = 1;
     delay_time_2 = (unsigned long)(1000000);
   }
   else{                       //otherwise set pump to active, dir pin to high, and delay time normally
     pump_2_active = HIGH;
     digitalWrite(DIR_PIN_2, HIGH);
+    pump_2_dir = 1;
     delay_time_2 = (unsigned long)((float)1000000/(float)read_value);
   }
 
@@ -163,16 +177,19 @@ void setup() {
   if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
     pump_3_active = HIGH;
     digitalWrite(DIR_PIN_3, LOW);
+    pump_3_dir = -1;
     delay_time_3 = (unsigned long)((float)1000000/(-(float)read_value));
   }
   else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
     pump_3_active = LOW;
     digitalWrite(DIR_PIN_3, HIGH);
+    pump_3_dir = 1;
     delay_time_3 = (unsigned long)(1000000);
   }
   else{                       //otherwise set pump to active, dir pin to high, and delay time normally
     pump_3_active = HIGH;
     digitalWrite(DIR_PIN_3, HIGH);
+    pump_3_dir = 1;
     delay_time_3 = (unsigned long)((float)1000000/(float)read_value);
   }
 
@@ -181,16 +198,19 @@ void setup() {
   if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
     pump_4_active = HIGH;
     digitalWrite(DIR_PIN_4, LOW);
+    pump_4_dir = -1;
     delay_time_4 = (unsigned long)((float)1000000/(-(float)read_value));
   }
   else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
     pump_4_active = LOW;
     digitalWrite(DIR_PIN_4, HIGH);
+    pump_4_dir = 1;
     delay_time_4 = (unsigned long)(1000000);
   }
   else{                       //otherwise set pump to active, dir pin to high, and delay time normally
     pump_4_active = HIGH;
     digitalWrite(DIR_PIN_4, HIGH);
+    pump_4_dir = 1;
     delay_time_4 = (unsigned long)((float)1000000/(float)read_value);
   }
 
@@ -199,16 +219,19 @@ void setup() {
   if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
     pump_5_active = HIGH;
     digitalWrite(DIR_PIN_5, LOW);
+    pump_5_dir = -1;
     delay_time_5 = (unsigned long)((float)1000000/(-(float)read_value));
   }
   else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
     pump_5_active = LOW;
     digitalWrite(DIR_PIN_5, HIGH);
+    pump_5_dir = 1;
     delay_time_5 = (unsigned long)(1000000);
   }
   else{                       //otherwise set pump to active, dir pin to high, and delay time normally
     pump_5_active = HIGH;
     digitalWrite(DIR_PIN_5, HIGH);
+    pump_5_dir = 1;
     delay_time_5 = (unsigned long)((float)1000000/(float)read_value);
   }
 
@@ -217,16 +240,19 @@ void setup() {
   if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
     pump_6_active = HIGH;
     digitalWrite(DIR_PIN_6, LOW);
+    pump_6_dir = -1;
     delay_time_6 = (unsigned long)((float)1000000/(-(float)read_value));
   }
   else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
     pump_6_active = LOW;
     digitalWrite(DIR_PIN_6, HIGH);
+    pump_6_dir = 1;
     delay_time_6 = (unsigned long)(1000000);
   }
   else{                       //otherwise set pump to active, dir pin to high, and delay time normally
     pump_6_active = HIGH;
     digitalWrite(DIR_PIN_6, HIGH);
+    pump_6_dir = 1;
     delay_time_6 = (unsigned long)((float)1000000/(float)read_value);
   }
 
@@ -260,12 +286,12 @@ void setup() {
   BLE.addService(pumpService);
 
   // set the initial value for the characteristic (note that this is based on the flash memory which has set delay_time):
-  Pump1Characteristic.writeValue((int)((float)1000000/(float)delay_time_1));
-  Pump2Characteristic.writeValue((int)((float)1000000/(float)delay_time_2));
-  Pump3Characteristic.writeValue((int)((float)1000000/(float)delay_time_3));
-  Pump4Characteristic.writeValue((int)((float)1000000/(float)delay_time_4));
-  Pump5Characteristic.writeValue((int)((float)1000000/(float)delay_time_5));
-  Pump6Characteristic.writeValue((int)((float)1000000/(float)delay_time_6));
+  Pump1Characteristic.writeValue((int)(pump_1_dir*(float)1000000/(float)delay_time_1)*(int)pump_1_active);
+  Pump2Characteristic.writeValue((int)(pump_2_dir*(float)1000000/(float)delay_time_2)*(int)pump_2_active);
+  Pump3Characteristic.writeValue((int)(pump_3_dir*(float)1000000/(float)delay_time_3)*(int)pump_3_active);
+  Pump4Characteristic.writeValue((int)(pump_4_dir*(float)1000000/(float)delay_time_4)*(int)pump_4_active);
+  Pump5Characteristic.writeValue((int)(pump_5_dir*(float)1000000/(float)delay_time_5)*(int)pump_5_active);
+  Pump6Characteristic.writeValue((int)(pump_6_dir*(float)1000000/(float)delay_time_6)*(int)pump_6_active);
 
   // start advertising
   BLE.advertise();
