@@ -9,7 +9,9 @@ STL files for the Starter Kit FCB
 
 ### Designer Credits:
 Aniruddha Paul
+
 Eric Safai
+
 Joshua Loessberg-Zahl
 
 ### Manufacturing Credits:
