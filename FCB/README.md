@@ -1,7 +1,7 @@
 # Starter Kit FCB
 
 ## Description
-STL files and the original sldprt files for the Starter Kit FCB
+STL files for the Starter Kit FCB
 
 
 
