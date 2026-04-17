@@ -318,168 +318,170 @@ void loop() {
   current_time = micros();
 
   if (current_time - last_time_BLE >= DELAY_TIME_BLE){
-    // listen for BLE peripherals to connect:
-    BLEDevice central = BLE.central();
-
-    // if a central is connected to peripheral:
-    if (central) {
-      if (central.connected()) {
-        // if the remote device wrote to the characteristic,
-        // use the value to set control values for pumps:
-        
-        if (Pump1Characteristic.written()) {
-          int read_value = Pump1Characteristic.value();
-          pump_1_freq.write(read_value);
-          Serial.println(String(read_value));
-
-          //parse read_value
-          if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
-            pump_1_active = HIGH;
-            digitalWrite(DIR_PIN_1, LOW);
-            delay_time_1 = (unsigned long)((float)1000000/(-(float)read_value));
-          }
-          else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
-            pump_1_active = LOW;
-            digitalWrite(DIR_PIN_1, HIGH);
-            delay_time_1 = (unsigned long)(1000000);
-          }
-          else{                       //otherwise set pump to active, dir pin to high, and delay time normally
-            pump_1_active = HIGH;
-            digitalWrite(DIR_PIN_1, HIGH);
-            delay_time_1 = (unsigned long)((float)1000000/(float)read_value);
-          }
-
-          Serial.println(String(delay_time_1));
-          last_time_1 = micros(); //puts next step time into the future
-          Serial.println("value updated!");
-        }
-        
-        if (Pump2Characteristic.written()) {
-          int read_value = Pump2Characteristic.value();
-          pump_2_freq.write(read_value);
-
-          //parse read_value
-          if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
-            pump_2_active = HIGH;
-            digitalWrite(DIR_PIN_2, LOW);
-            delay_time_2 = (unsigned long)((float)1000000/(-(float)read_value));
-          }
-          else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
-            pump_2_active = LOW;
-            digitalWrite(DIR_PIN_2, HIGH);
-            delay_time_2 = (unsigned long)(1000000);
-          }
-          else{                       //otherwise set pump to active, dir pin to high, and delay time normally
-            pump_2_active = HIGH;
-            digitalWrite(DIR_PIN_2, HIGH);
-            delay_time_2 = (unsigned long)((float)1000000/(float)read_value);
+    if(BLE.connected()) {
+      // listen for BLE peripherals to connect:
+      BLEDevice central = BLE.central();
+  
+      // if a central is connected to peripheral:
+      if (central) {
+        if (central.connected()) {
+          // if the remote device wrote to the characteristic,
+          // use the value to set control values for pumps:
+          
+          if (Pump1Characteristic.written()) {
+            int read_value = Pump1Characteristic.value();
+            pump_1_freq.write(read_value);
+            Serial.println(String(read_value));
+  
+            //parse read_value
+            if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
+              pump_1_active = HIGH;
+              digitalWrite(DIR_PIN_1, LOW);
+              delay_time_1 = (unsigned long)((float)1000000/(-(float)read_value));
+            }
+            else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
+              pump_1_active = LOW;
+              digitalWrite(DIR_PIN_1, HIGH);
+              delay_time_1 = (unsigned long)(1000000);
+            }
+            else{                       //otherwise set pump to active, dir pin to high, and delay time normally
+              pump_1_active = HIGH;
+              digitalWrite(DIR_PIN_1, HIGH);
+              delay_time_1 = (unsigned long)((float)1000000/(float)read_value);
+            }
+  
+            Serial.println(String(delay_time_1));
+            last_time_1 = micros(); //puts next step time into the future
+            Serial.println("value updated!");
           }
           
-          last_time_2 = micros(); //puts next step time into the future
-          Serial.println("value updated!");
-        }
-
-        if (Pump3Characteristic.written()) {
-          int read_value = Pump3Characteristic.value();
-          pump_3_freq.write(read_value);
-
-          //parse read_value
-          if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
-            pump_3_active = HIGH;
-            digitalWrite(DIR_PIN_3, LOW);
-            delay_time_3 = (unsigned long)((float)1000000/(-(float)read_value));
+          if (Pump2Characteristic.written()) {
+            int read_value = Pump2Characteristic.value();
+            pump_2_freq.write(read_value);
+  
+            //parse read_value
+            if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
+              pump_2_active = HIGH;
+              digitalWrite(DIR_PIN_2, LOW);
+              delay_time_2 = (unsigned long)((float)1000000/(-(float)read_value));
+            }
+            else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
+              pump_2_active = LOW;
+              digitalWrite(DIR_PIN_2, HIGH);
+              delay_time_2 = (unsigned long)(1000000);
+            }
+            else{                       //otherwise set pump to active, dir pin to high, and delay time normally
+              pump_2_active = HIGH;
+              digitalWrite(DIR_PIN_2, HIGH);
+              delay_time_2 = (unsigned long)((float)1000000/(float)read_value);
+            }
+            
+            last_time_2 = micros(); //puts next step time into the future
+            Serial.println("value updated!");
           }
-          else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
-            pump_3_active = LOW;
-            digitalWrite(DIR_PIN_3, HIGH);
-            delay_time_3 = (unsigned long)(1000000);
+  
+          if (Pump3Characteristic.written()) {
+            int read_value = Pump3Characteristic.value();
+            pump_3_freq.write(read_value);
+  
+            //parse read_value
+            if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
+              pump_3_active = HIGH;
+              digitalWrite(DIR_PIN_3, LOW);
+              delay_time_3 = (unsigned long)((float)1000000/(-(float)read_value));
+            }
+            else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
+              pump_3_active = LOW;
+              digitalWrite(DIR_PIN_3, HIGH);
+              delay_time_3 = (unsigned long)(1000000);
+            }
+            else{                       //otherwise set pump to active, dir pin to high, and delay time normally
+              pump_3_active = HIGH;
+              digitalWrite(DIR_PIN_3, HIGH);
+              delay_time_3 = (unsigned long)((float)1000000/(float)read_value);
+            }
+            
+            last_time_3 = micros(); //puts next step time into the future
+            Serial.println("value updated!");
           }
-          else{                       //otherwise set pump to active, dir pin to high, and delay time normally
-            pump_3_active = HIGH;
-            digitalWrite(DIR_PIN_3, HIGH);
-            delay_time_3 = (unsigned long)((float)1000000/(float)read_value);
+  
+          if (Pump4Characteristic.written()) {
+            int read_value = Pump4Characteristic.value();
+            pump_4_freq.write(read_value);
+  
+            //parse read_value
+            if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
+              pump_4_active = HIGH;
+              digitalWrite(DIR_PIN_4, LOW);
+              delay_time_4 = (unsigned long)((float)1000000/(-(float)read_value));
+            }
+            else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
+              pump_4_active = LOW;
+              digitalWrite(DIR_PIN_4, HIGH);
+              delay_time_4 = (unsigned long)(1000000);
+            }
+            else{                       //otherwise set pump to active, dir pin to high, and delay time normally
+              pump_4_active = HIGH;
+              digitalWrite(DIR_PIN_4, HIGH);
+              delay_time_4 = (unsigned long)((float)1000000/(float)read_value);
+            }
+            
+            last_time_4 = micros(); //puts next step time into the future
+            Serial.println("value updated!");
+          }
+  
+          if (Pump5Characteristic.written()) {
+            int read_value = Pump5Characteristic.value();
+            pump_5_freq.write(read_value);
+  
+            //parse read_value
+            if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
+              pump_5_active = HIGH;
+              digitalWrite(DIR_PIN_5, LOW);
+              delay_time_5 = (unsigned long)((float)1000000/(-(float)read_value));
+            }
+            else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
+              pump_5_active = LOW;
+              digitalWrite(DIR_PIN_5, HIGH);
+              delay_time_5 = (unsigned long)(1000000);
+            }
+            else{                       //otherwise set pump to active, dir pin to high, and delay time normally
+              pump_5_active = HIGH;
+              digitalWrite(DIR_PIN_5, HIGH);
+              delay_time_5 = (unsigned long)((float)1000000/(float)read_value);
+            }
+            
+            last_time_5 = micros(); //puts next step time into the future
+            Serial.println("value updated!");
           }
           
-          last_time_3 = micros(); //puts next step time into the future
-          Serial.println("value updated!");
+          if (Pump6Characteristic.written()) {
+            int read_value = Pump6Characteristic.value();
+            pump_6_freq.write(read_value);
+  
+            //parse read_value
+            if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
+              pump_6_active = HIGH;
+              digitalWrite(DIR_PIN_6, LOW);
+              delay_time_6 = (unsigned long)((float)1000000/(-(float)read_value));
+            }
+            else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
+              pump_6_active = LOW;
+              digitalWrite(DIR_PIN_6, HIGH);
+              delay_time_6 = (unsigned long)(1000000);
+            }
+            else{                       //otherwise set pump to active, dir pin to high, and delay time normally
+              pump_6_active = HIGH;
+              digitalWrite(DIR_PIN_6, HIGH);
+              delay_time_6 = (unsigned long)((float)1000000/(float)read_value);
+            }
+            
+            last_time_6 = micros(); //puts next step time into the future
+            Serial.println("value updated!");
+            
+          }
         }
-
-        if (Pump4Characteristic.written()) {
-          int read_value = Pump4Characteristic.value();
-          pump_4_freq.write(read_value);
-
-          //parse read_value
-          if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
-            pump_4_active = HIGH;
-            digitalWrite(DIR_PIN_4, LOW);
-            delay_time_4 = (unsigned long)((float)1000000/(-(float)read_value));
-          }
-          else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
-            pump_4_active = LOW;
-            digitalWrite(DIR_PIN_4, HIGH);
-            delay_time_4 = (unsigned long)(1000000);
-          }
-          else{                       //otherwise set pump to active, dir pin to high, and delay time normally
-            pump_4_active = HIGH;
-            digitalWrite(DIR_PIN_4, HIGH);
-            delay_time_4 = (unsigned long)((float)1000000/(float)read_value);
-          }
-          
-          last_time_4 = micros(); //puts next step time into the future
-          Serial.println("value updated!");
-        }
-
-        if (Pump5Characteristic.written()) {
-          int read_value = Pump5Characteristic.value();
-          pump_5_freq.write(read_value);
-
-          //parse read_value
-          if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
-            pump_5_active = HIGH;
-            digitalWrite(DIR_PIN_5, LOW);
-            delay_time_5 = (unsigned long)((float)1000000/(-(float)read_value));
-          }
-          else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
-            pump_5_active = LOW;
-            digitalWrite(DIR_PIN_5, HIGH);
-            delay_time_5 = (unsigned long)(1000000);
-          }
-          else{                       //otherwise set pump to active, dir pin to high, and delay time normally
-            pump_5_active = HIGH;
-            digitalWrite(DIR_PIN_5, HIGH);
-            delay_time_5 = (unsigned long)((float)1000000/(float)read_value);
-          }
-          
-          last_time_5 = micros(); //puts next step time into the future
-          Serial.println("value updated!");
-        }
-        
-        if (Pump6Characteristic.written()) {
-          int read_value = Pump6Characteristic.value();
-          pump_6_freq.write(read_value);
-
-          //parse read_value
-          if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
-            pump_6_active = HIGH;
-            digitalWrite(DIR_PIN_6, LOW);
-            delay_time_6 = (unsigned long)((float)1000000/(-(float)read_value));
-          }
-          else if (read_value == 0) {  //set dir pin high, pump to inactive and speed to 1Hz(speed will be ignored later)
-            pump_6_active = LOW;
-            digitalWrite(DIR_PIN_6, HIGH);
-            delay_time_6 = (unsigned long)(1000000);
-          }
-          else{                       //otherwise set pump to active, dir pin to high, and delay time normally
-            pump_6_active = HIGH;
-            digitalWrite(DIR_PIN_6, HIGH);
-            delay_time_6 = (unsigned long)((float)1000000/(float)read_value);
-          }
-          
-          last_time_6 = micros(); //puts next step time into the future
-          Serial.println("value updated!");
-          
-        }
-      } 
+      }
       last_time_BLE = current_time;
       current_time = micros();   //update the current time if the BLE code ran to account for any lag
     }
@@ -487,8 +489,6 @@ void loop() {
 
      
   //Checks timers and updates outputs accordingly
-  current_time = micros();
-  
   if (pump_1_active) {
     if (current_time - last_time_1 >= delay_time_1){
       last_time_1 = current_time;
