@@ -82,6 +82,21 @@ BLEDescriptor Pump5CharacteristicDescriptor("2901", "Pump 5 Frequency (int | Hz)
 BLEIntCharacteristic Pump6Characteristic("2A57", BLERead | BLEWrite);
 BLEDescriptor Pump6CharacteristicDescriptor("2901", "Pump 6 Frequency (int | Hz)");
 
+//BLE connected flag and associated callbacks
+volatile bool ble_connected = false;
+
+void bleConnectHandler(BLEDevice central) {
+  ble_connected = true;
+  //Serial.print("Connected: ");
+  //Serial.println(central.address());
+}
+
+void bleDisconnectHandler(BLEDevice central) {
+  ble_connected = false;
+  //Serial.print("Disconnected: ");
+  //Serial.println(central.address());
+}
+
 void setup() {
   //Variable for reading the pump direction to later update the initail value of the BLE characteristics
   int pump_1_dir = -1;
@@ -297,6 +312,10 @@ void setup() {
   Pump5Characteristic.writeValue((int)(pump_5_dir*(float)1000000/(float)delay_time_5)*(int)pump_5_active);
   Pump6Characteristic.writeValue((int)(pump_6_dir*(float)1000000/(float)delay_time_6)*(int)pump_6_active);
 
+  //Setup callbacks to report if a user is connected or not
+  BLE.setEventHandler(BLEConnected, bleConnectHandler);
+  BLE.setEventHandler(BLEDisconnected, bleDisconnectHandler);
+
   // start advertising
   BLE.advertise();
 
@@ -318,10 +337,13 @@ void loop() {
   current_time = micros();
 
   if (current_time - last_time_BLE >= DELAY_TIME_BLE){
-    if(BLE.connected()) {
+    last_time_BLE = current_time;
+    BLE.poll(0);
+
+    if(ble_connected){
       // listen for BLE peripherals to connect:
       BLEDevice central = BLE.central();
-  
+
       // if a central is connected to peripheral:
       if (central) {
         if (central.connected()) {
@@ -332,7 +354,7 @@ void loop() {
             int read_value = Pump1Characteristic.value();
             pump_1_freq.write(read_value);
             Serial.println(String(read_value));
-  
+
             //parse read_value
             if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
               pump_1_active = HIGH;
@@ -349,7 +371,7 @@ void loop() {
               digitalWrite(DIR_PIN_1, HIGH);
               delay_time_1 = (unsigned long)((float)1000000/(float)read_value);
             }
-  
+
             Serial.println(String(delay_time_1));
             last_time_1 = micros(); //puts next step time into the future
             Serial.println("value updated!");
@@ -358,7 +380,7 @@ void loop() {
           if (Pump2Characteristic.written()) {
             int read_value = Pump2Characteristic.value();
             pump_2_freq.write(read_value);
-  
+
             //parse read_value
             if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
               pump_2_active = HIGH;
@@ -379,11 +401,11 @@ void loop() {
             last_time_2 = micros(); //puts next step time into the future
             Serial.println("value updated!");
           }
-  
+
           if (Pump3Characteristic.written()) {
             int read_value = Pump3Characteristic.value();
             pump_3_freq.write(read_value);
-  
+
             //parse read_value
             if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
               pump_3_active = HIGH;
@@ -404,11 +426,11 @@ void loop() {
             last_time_3 = micros(); //puts next step time into the future
             Serial.println("value updated!");
           }
-  
+
           if (Pump4Characteristic.written()) {
             int read_value = Pump4Characteristic.value();
             pump_4_freq.write(read_value);
-  
+
             //parse read_value
             if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
               pump_4_active = HIGH;
@@ -429,11 +451,11 @@ void loop() {
             last_time_4 = micros(); //puts next step time into the future
             Serial.println("value updated!");
           }
-  
+
           if (Pump5Characteristic.written()) {
             int read_value = Pump5Characteristic.value();
             pump_5_freq.write(read_value);
-  
+
             //parse read_value
             if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
               pump_5_active = HIGH;
@@ -458,7 +480,7 @@ void loop() {
           if (Pump6Characteristic.written()) {
             int read_value = Pump6Characteristic.value();
             pump_6_freq.write(read_value);
-  
+
             //parse read_value
             if (read_value < 0){     //set pump to active, flip sign of read value, and set DIR pin to low
               pump_6_active = HIGH;
@@ -480,15 +502,16 @@ void loop() {
             Serial.println("value updated!");
             
           }
-        }
+        } 
+        current_time = micros();   //update the current time if the BLE code ran to account for any lag
       }
-      last_time_BLE = current_time;
-      current_time = micros();   //update the current time if the BLE code ran to account for any lag
     }
   }
 
      
   //Checks timers and updates outputs accordingly
+  current_time = micros();
+  
   if (pump_1_active) {
     if (current_time - last_time_1 >= delay_time_1){
       last_time_1 = current_time;
